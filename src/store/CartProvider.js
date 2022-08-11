@@ -32,7 +32,8 @@ const CartProvider = (props) => {
 
   }
 
-  //Default state values we pass into the CartContext.Provider
+  //state values from the reducer functions that we pass 
+  //into the CartContext.Provider that surrounds APP.js
     const cartProviderValue = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
