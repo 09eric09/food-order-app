@@ -9,10 +9,29 @@ let initialCart = {
 
 const cartReducer = (state, action) => {
   if (action.val === 'ADD') {
-    const updatedItems = state.items.concat(action.item);
     const updatedAmount = state.totalAmount + action.item.price * action.item.amount;
+    // Check to see if the item is already in the array/cart, if yes, this returns the index
+    const existingItemIndex = state.items.findIndex(item => item.id === action.item.id);
+    //Then get the item from the array by it's index, store it in a variable
+    const existingItem = state.items[existingItemIndex];
+    //If there is an existing item, update the price amount for that item
+    let updatedItem;
+    let updatedItems;
+    if (existingItem) {
+      updatedItem = {
+        //copy over the existing data for that item object, updated the amount
+        ...existingItem,
+        amount: existingItem.amount + action.item.amount,
+      }
+      //replace the existing item in the array with the updatedItem
+      updatedItems = [...state.items];
+      updatedItems[existingItemIndex] = updatedItem;
+    } else {
+      //If no item already exists, just add the new item to the array
+      updatedItems = state.items.concat(action.item);
+    }
 
-    return{
+    return {
       items: updatedItems,
       totalAmount: updatedAmount,
     };
@@ -23,8 +42,9 @@ const cartReducer = (state, action) => {
 const CartProvider = (props) => {
 
   const [cartState, dispatchCart] = useReducer(cartReducer, initialCart);
-
+  //item argument is the object being passed from MealItem.js
   const addItemToCartHandler = (item) => {
+    //We then pass object as item to the dispatchCart function to handle state
     dispatchCart({val:'ADD', item:item});
   }
 
