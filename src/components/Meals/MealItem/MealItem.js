@@ -6,6 +6,7 @@ import CartContext from '../../../store/cart-context';
 const MealItem = (props) => {
   const cartCTX = useContext(CartContext);
   // const price = `$${props.price.toFixed(2)}`;
+  //The amount argument is the number value from MealItemForm.js
   const onAddToCartHandler = (amount) => {
     let newItem = {
       id: props.id,
@@ -14,6 +15,7 @@ const MealItem = (props) => {
       description: props.meal.description,
       amount: amount,
     }
+    //Sending this up to Context 
     cartCTX.addItem(newItem);
   }
 
