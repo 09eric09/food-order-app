@@ -23,7 +23,7 @@ const MealItemForm = (props) => {
     <form onSubmit={submitFormHandler} className={classes.form}>
       <Input ref={amountInputRef} label={'Amount'} input={{
         type: 'number',
-        id: 'amount',
+        id: 'amount_' + props.id, // this changed!
         defaultValue: '1',
       }}/>
       <button>+ Add</button>
