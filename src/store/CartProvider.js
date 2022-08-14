@@ -36,6 +36,28 @@ const cartReducer = (state, action) => {
       totalAmount: updatedAmount,
     };
   }
+
+  if (action.val === 'REMOVE') {
+    const existingItemIndex = state.items.findIndex(item => item.id === action.id);
+    const existingItem = state.items[existingItemIndex];
+    const updatedAmount = state.totalAmount - existingItem.price;
+    let updatedItems;
+    let updatedItem;
+    if (existingItem.amount === 1) {
+      updatedItems = state.items.filter(item => item.id !== action.id);
+    }else {
+      updatedItem = {
+        ...existingItem, 
+        amount: existingItem.amount -1,
+      }
+      updatedItems = [...state.items];
+      updatedItems[existingItemIndex] = updatedItem;
+    }
+    return {
+      items: updatedItems,
+      totalAmount: updatedAmount,
+    };
+  }
   return initialCart;
 }
 
@@ -48,8 +70,8 @@ const CartProvider = (props) => {
     dispatchCart({val:'ADD', item:item});
   }
 
-  const removeItemFromCartHandler = (item) => {
-
+  const removeItemFromCartHandler = (id) => {
+    dispatchCart({val:'REMOVE', id:id});
   }
 
   //state values from the reducer functions that we pass 
