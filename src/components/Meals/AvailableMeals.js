@@ -5,6 +5,8 @@ import classes from './AvailableMeals.module.css';
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     let fetchedMeals = [];
@@ -23,11 +25,25 @@ const AvailableMeals = () => {
 
         fetchedMeals.push(item);
         setMeals(fetchedMeals);
+        setIsLoading(false);
       }
-    });
+    }).catch(error => setError(error.message));
   }, []);
 
+  if (isLoading) {
+    return <div>
+      <p className={classes.loading}>Loading...</p>
+    </div>
+  }
+
+  if (error) {
+    return <div>
+      <p className={classes.error}>{error}</p>
+    </div>
+  }
+
   return (
+    <>
     <section className={classes.meals}>
       <Card>
       <ul>
@@ -35,6 +51,7 @@ const AvailableMeals = () => {
       </ul>
       </Card>
     </section>
+    </>
   )
 }
 
