@@ -30,7 +30,7 @@ const AvailableMeals = () => {
     }).catch(error => setError(error.message));
   }, []);
 
-  if (isLoading) {
+  if (isLoading && !error) {
     return <div>
       <p className={classes.loading}>Loading...</p>
     </div>
