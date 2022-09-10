@@ -32,10 +32,12 @@ const Checkout = (props) => {
            return; 
         }
 
-        // fetch(`https://food-order-app-2e7ec-default-rtdb.firebaseio.com/`, {
-        //     method: 'POST', 
-        //     body: JSON.stringify(formIsValidObject),
-        // });
+        props.onConfirm({
+            name: nameInput, 
+            street: streetInput, 
+            postal: postalInput,
+            city: cityInput,
+        });
     }
 
   return (
