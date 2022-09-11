@@ -58,6 +58,11 @@ const cartReducer = (state, action) => {
       totalAmount: updatedAmount,
     };
   }
+
+  if (action.val === 'CLEAR') {
+    return initialCart;
+  }
+  
   return initialCart;
 }
 
@@ -74,6 +79,10 @@ const CartProvider = (props) => {
     dispatchCart({val:'REMOVE', id:id});
   }
 
+  const clearCartHandler = () => {
+    dispatchCart({val: 'CLEAR'});
+  }
+
   //state values from the reducer functions that we pass 
   //into the CartContext.Provider that surrounds APP.js
     const cartProviderValue = {
@@ -81,6 +90,7 @@ const CartProvider = (props) => {
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler, 
         removeItem: removeItemFromCartHandler,
+        clearCart: clearCartHandler,
     };
 
   return (
